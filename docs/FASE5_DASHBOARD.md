@@ -1,75 +1,56 @@
-# 📊 Fase 5: Dashboard de Métricas - IMPLEMENTADA! ✅
+# 📊 Dashboard de Métricas
 
-## O Que Foi Criado
+O **iFood Refund Agent** inclui um dashboard automático no Google Sheets para monitoramento em tempo real do ROI (Retorno sobre Investimento) e eficiência do sistema.
 
-✅ Aba "Dashboard" no Google Sheets  
-✅ Métricas calculadas automaticamente  
-✅ Fórmulas dinâmicas que atualizam em tempo real  
-✅ Formatação profissional  
-✅ Top 5 maiores valores  
+## 🎯 Visão Geral
 
-## Métricas Disponíveis
+O dashboard é dividido em duas abas principais:
+1. **Dashboard**: Visualização consolidada com métricas, KPIs e tabelas dinâmicas.
+2. **Relatório_ROI_iFood**: Base de dados bruta com o registro de todas as contestações geradas.
 
-### 🎯 Métricas Principais
+## 📈 Métricas Monitoradas
 
-- **Total de Contestações**: Quantidade total processada
-- **Valor Total Recuperado**: Soma de todos os valores (R$)
-- **Ticket Médio**: Média dos valores contestados
-- **Maior Valor**: Maior contestação individual
-- **Menor Valor**: Menor contestação individual
+### KPIs Principais
+- **Total de Contestações**: Volume total de casos processados.
+- **Valor Total Recuperado (R$)**: Soma do impacto financeiro de todas as contestações ganhas/geradas.
+- **Ticket Médio**: Valor médio por contestação.
+- **Maior/Menor Valor**: Extremos financeiros processados.
 
-### 📅 Análise Temporal
+### Análise Temporal
+- **Hoje**: Contestações geradas no dia atual.
+- **Esta Semana**: Volume acumulado na semana corrente.
+- **Este Mês**: Volume acumulado no mês corrente.
 
-- **Contestações Hoje**: Quantas foram processadas hoje
-- **Contestações Esta Semana**: Acumulado semanal
-- **Contestações Este Mês**: Acumulado mensal
+### Top 5 Maiores Valores
+Uma tabela dinâmica que lista automaticamente os 5 pedidos com maior valor financeiro contestado, útil para priorização de acompanhamento.
 
-### 🏆 Top 5 Maiores Valores
+## 🛠️ Como Funciona
 
-Tabela dinâmica mostrando:
-- Pedido ID
-- Valor (R$)
-- Data
+### Atualização Automática
+O script `create_dashboard.py` configura a planilha com fórmulas do Google Sheets (`=SUM`, `=COUNTIF`, `=QUERY`). Isso significa que:
+- O Python **não** precisa calcular as métricas a cada execução.
+- O Python apenas adiciona uma nova linha na aba de dados (`Relatório_ROI_iFood`).
+- O Google Sheets recalcula instantaneamente todas as métricas e gráficos no Dashboard.
 
-## Como Acessar
+### Estrutura de Dados (`Relatório_ROI_iFood`)
 
-1. Abra a planilha: https://docs.google.com/spreadsheets/d/14qM34cpPSK8rPcIfjQhY1kI1ysJBAdkaGa_xGX3TKao
-2. Clique na aba **"Dashboard"**
-3. As métricas são atualizadas automaticamente! 🔄
+| Coluna | Campo | Descrição |
+|--------|-------|-----------|
+| A | Order ID | Identificador único do pedido |
+| B | Valor (R$) | Valor financeiro contestado |
+| C | Data | Data da contestação (AAAA-MM-DD) |
+| D | Defesa | Texto da defesa gerada pela IA |
 
-## Como Funciona
+## 🚀 Como Recriar o Dashboard
 
-O dashboard usa **fórmulas do Google Sheets** que consultam a aba "Relatório_ROI_iFood":
-
-```excel
-=COUNTA(Relatório_ROI_iFood!A:A)-1  // Total de contestações
-=SUM(Relatório_ROI_iFood!B:B)       // Valor total
-=AVERAGE(Relatório_ROI_iFood!B:B)   // Ticket médio
-```
-
-**Vantagem**: Não precisa rodar nenhum script! Tudo é calculado automaticamente pelo Google Sheets.
-
-## Recriar o Dashboard
-
-Se precisar recriar (ex: resetar formatação):
+Se você apagar a aba ou quiser resetar o layout, basta rodar:
 
 ```bash
 cd python_brain
-./venv/bin/python create_dashboard.py
+python create_dashboard.py
 ```
 
-## Próximas Melhorias (Opcional)
-
-- [ ] Gráficos visuais (pizza, linha)
-- [ ] Taxa de sucesso (aprovadas vs rejeitadas)
-- [ ] Análise por motivo de reclamação
-- [ ] Tendência temporal (gráfico de linha)
-
-## Exemplo de Uso
-
-Toda vez que o sistema processa uma contestação:
-1. Dados são salvos na aba "Relatório_ROI_iFood"
-2. Dashboard atualiza AUTOMATICAMENTE
-3. Você vê as métricas em tempo real!
-
-**Sem necessidade de rodar scripts ou atualizar manualmente!** ✨
+Isso irá:
+1. Verificar se a aba `Dashboard` existe (e limpar se necessário).
+2. Renomear a aba de dados para `Relatório_ROI_iFood` (se necessário).
+3. Inserir os cabeçalhos, fórmulas e formatação visual (cores, negrito, moeda).

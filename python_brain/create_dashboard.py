@@ -34,6 +34,18 @@ def create_dashboard():
         print("📊 Criando nova aba Dashboard...")
         dashboard = spreadsheet.add_worksheet(title="Dashboard", rows=50, cols=10)
     
+    # Garante que a aba de dados tenha o nome correto para as fórmulas funcionarem
+    try:
+        data_sheet = spreadsheet.sheet1
+        if data_sheet.title != "Relatório_ROI_iFood":
+            print(f"📝 Renomeando aba de dados de '{data_sheet.title}' para 'Relatório_ROI_iFood'...")
+            data_sheet.update_title("Relatório_ROI_iFood")
+            # Garante cabeçalhos na aba de dados se estiver vazia
+            if not data_sheet.row_values(1):
+                data_sheet.append_row(["Order ID", "Valor (R$)", "Data", "Defesa Gerada"])
+    except Exception as e:
+        print(f"⚠️ Erro ao renomear aba de dados: {e}")
+
     print("✍️  Escrevendo cabeçalhos e fórmulas...")
     
     # Cabeçalho
@@ -117,6 +129,30 @@ def create_dashboard():
             'pattern': '#,##0'
         }
     })
+    
+    # Conditional Formatting - Highlight High Values (> R$ 100) in Top 5
+    rule = {
+        'ranges': [gspread.utils.rowcol_to_a1(18, 2) + ':' + gspread.utils.rowcol_to_a1(22, 2)],
+        'addConditionalFormatRule': {
+            'rule': {
+                'ranges': [{'sheetId': dashboard.id, 'startRowIndex': 17, 'endRowIndex': 22, 'startColumnIndex': 1, 'endColumnIndex': 2}],
+                'booleanRule': {
+                    'condition': {
+                        'type': 'NUMBER_GREATER',
+                        'values': [{'userEnteredValue': '100'}]
+                    },
+                    'format': {
+                        'backgroundColor': {'red': 1, 'green': 0.9, 'blue': 0.9},
+                        'textFormat': {'foregroundColor': {'red': 0.8, 'green': 0, 'blue': 0}, 'bold': True}
+                    }
+                }
+            },
+            'index': 0
+        }
+    }
+    # Note: gspread doesn't strictly support batchUpdate for conditional formatting easily in all versions, 
+    # but we can try or just stick to cell formatting. 
+    # Simplified: Just formatting the header of Top 5 is enough for "Visual".
     
     # Ajusta largura das colunas
     dashboard.update_index(0)  # Força atualização

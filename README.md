@@ -11,7 +11,7 @@
 
 **Sistema de IA Generativa para automação de contestações de reembolso do iFood**
 
-[Demonstração](#-demonstração) • [Instalação](#-instalação-rápida) • [Arquitetura](#-arquitetura) • [Documentação](#-documentação)
+[Demonstração](#demonstração) • [Instalação](#instalação-rápida) • [Arquitetura](#arquitetura) • [Documentação](#documentação)
 
 </div>
 
@@ -19,16 +19,16 @@
 
 ## 📋 Índice
 
-- [Sobre o Projeto](#-sobre-o-projeto)
-- [Funcionalidades](#-funcionalidades)
-- [Arquitetura](#-arquitetura)
-- [Instalação Rápida](#-instalação-rápida)
-- [Como Usar](#-como-usar)
-- [Casos de Teste](#-casos-de-teste)
-- [Dashboard](#-dashboard)
-- [Tecnologias](#-tecnologias)
-- [Roadmap](#-roadmap)
-- [Contribuindo](#-contribuindo)
+- [Sobre o Projeto](#sobre-o-projeto)
+- [Funcionalidades](#funcionalidades)
+- [Arquitetura](#arquitetura)
+- [Instalação Rápida](#instalação-rápida)
+- [Como Usar](#como-usar)
+- [Casos de Teste](#casos-de-teste)
+- [Dashboard](#dashboard)
+- [Tecnologias](#tecnologias)
+- [Roadmap](#roadmap)
+- [Contribuindo](#contribuindo)
 
 ---
 
