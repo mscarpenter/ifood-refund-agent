@@ -28,7 +28,7 @@ def ingest_data():
     if not os.getenv("GOOGLE_API_KEY"):
          raise ValueError("GOOGLE_API_KEY não encontrada no .env. RAG precisa dela.")
          
-    embeddings = GoogleGenerativeAIEmbeddings(model="models/text-embedding-004")w 
+    embeddings = GoogleGenerativeAIEmbeddings(model="models/text-embedding-004")
     
     print("--- 2. Criando o Banco Vetorial (ChromaDB) ---")
     
