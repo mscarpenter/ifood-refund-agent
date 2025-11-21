@@ -32,7 +32,7 @@
 
 ---
 
-## 🎯 Sobre o Projeto
+## Sobre o Projeto
 
 O **iFood Refund Agent** é um sistema de **Inteligência Artificial Generativa** que automatiza o processo de contestação de reembolsos no iFood, utilizando:
 
@@ -62,7 +62,7 @@ E gera uma **defesa legal profissional** em segundos!
 
 ---
 
-## 🚀 Funcionalidades
+## Funcionalidades
 
 ### ✅ Implementadas
 
@@ -83,7 +83,7 @@ E gera uma **defesa legal profissional** em segundos!
 
 ---
 
-## 🏗️ Arquitetura
+## Arquitetura
 
 ```mermaid
 graph TB
@@ -114,7 +114,7 @@ graph TB
 
 ---
 
-## ⚡ Instalação Rápida
+## Instalação Rápida
 
 ### Pré-requisitos
 
@@ -177,7 +177,7 @@ Importe o workflow `n8n_workflow.json` e configure o webhook.
 
 ---
 
-## 🎮 Como Usar
+## Como Usar
 
 ### Teste Local
 
@@ -208,7 +208,7 @@ curl -X POST http://localhost:5678/webhook/ifood-refund \
 
 ---
 
-## 🧪 Casos de Teste
+## Casos de Teste
 
 O projeto inclui **15 casos de teste** cobrindo todos os cenários:
 
@@ -224,7 +224,7 @@ Veja todos em [`test_cases/README.md`](test_cases/README.md)
 
 ---
 
-## 📊 Dashboard
+## Dashboard
 
 O sistema cria automaticamente um dashboard no Google Sheets com:
 
@@ -246,7 +246,7 @@ Tabela dinâmica atualizada em tempo real
 
 ---
 
-## 🛠️ Tecnologias
+## Tecnologias
 
 ### Backend
 - **Python 3.12**: Linguagem principal
@@ -267,7 +267,7 @@ Tabela dinâmica atualizada em tempo real
 
 ---
 
-## 🗺️ Roadmap
+## Roadmap
 
 ### ✅ Fase 1-5: Concluídas
 - [x] RAG com políticas do iFood
@@ -288,7 +288,7 @@ Tabela dinâmica atualizada em tempo real
 
 ---
 
-## 📚 Documentação
+## Documentação
 
 - [Configuração do Telegram](docs/TELEGRAM_SETUP.md)
 - [Dashboard de Métricas](docs/FASE5_DASHBOARD.md)
@@ -297,7 +297,7 @@ Tabela dinâmica atualizada em tempo real
 
 ---
 
-## 🤝 Contribuindo
+## Contribuindo
 
 Contribuições são bem-vindas! Por favor:
 
