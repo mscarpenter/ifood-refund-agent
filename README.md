@@ -7,6 +7,7 @@
 ![LangChain](https://img.shields.io/badge/LangChain-RAG-green)
 ![n8n](https://img.shields.io/badge/n8n-Workflow-red)
 ![Status](https://img.shields.io/badge/Status-Produção-success)
+![CI](https://github.com/mscarpenter/ifood-refund-agent/actions/workflows/ci.yml/badge.svg)
 
 **Sistema de IA Generativa para automação de contestações de reembolso do iFood**
 
@@ -282,7 +283,7 @@ Tabela dinâmica atualizada em tempo real
 - [ ] **Gráficos visuais** no dashboard
 - [ ] **API REST** para integração externa
 - [ ] **Testes unitários** completos
-- [ ] **CI/CD** com GitHub Actions
+- [x] **CI/CD** com GitHub Actions
 - [ ] **Deploy em produção** (AWS/GCP)
 
 ---
