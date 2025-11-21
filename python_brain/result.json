@@ -1,0 +1,8 @@
+{
+  "action": "CONTESTAR",
+  "order_id": "FINAL-SUCCESS-ROI",
+  "financial_impact": 125.0,
+  "confidence": 1.0,
+  "model_used": "Gemini 2.0 Flash (RAG Ativo)",
+  "generated_defense": "Prezado(a) Parceiro(a),\n\nReferente ao pedido FINAL-SUCCESS-ROI, gostaríamos de informar que a contestação do cliente, alegando \"ITEM_NOT_RECEIVED\", foi **NEGADA**. Embora não tenhamos informações sobre as regras específicas para comprovar a entrega e o uso de um PIN em nossa base de conhecimento, identificamos que o código PIN foi validado com sucesso em 20/11/2025 às 19:56, confirmando a entrega ao titular da conta.\n\nA validação do PIN é uma ferramenta crucial para garantir a segurança e a confirmação da entrega dos pedidos. Agradecemos a sua colaboração ao utilizar este procedimento, pois ele serve como evidência fundamental em casos de contestação.\n"
+}

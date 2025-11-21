@@ -1,0 +1,53 @@
+{
+    "order_id": "CHAT-INFORMAL-AGREEMENT",
+    "reason_code": "ITEM_NOT_RECEIVED",
+    "financial_impact": 72.50,
+    "timestamps": {
+        "created_at": "2025-11-20T15:00:00Z",
+        "confirmed_at": "2025-11-20T15:05:00Z",
+        "eta_max": "2025-11-20T15:50:00Z",
+        "dispatched_at": "2025-11-20T15:30:00Z",
+        "actual_arrival_at": "2025-11-20T15:48:00Z"
+    },
+    "delivery_evidence": {
+        "gps_logs": [
+            {
+                "timestamp": "2025-11-20T15:48:00Z",
+                "latitude": -23.550520,
+                "longitude": -46.633308,
+                "distance_to_address_meters": 5
+            }
+        ],
+        "delivery_pin_validated": false,
+        "pin_validated_at": null
+    },
+    "chat_history": [
+        {
+            "timestamp": "2025-11-20T15:40:00Z",
+            "sender": "customer",
+            "text": "Não vou conseguir descer. Pode deixar com o porteiro?"
+        },
+        {
+            "timestamp": "2025-11-20T15:41:00Z",
+            "sender": "driver",
+            "text": "Sem problemas! Vou deixar na portaria."
+        },
+        {
+            "timestamp": "2025-11-20T15:48:00Z",
+            "sender": "driver",
+            "text": "Deixei com o porteiro. Bom apetite!"
+        },
+        {
+            "timestamp": "2025-11-20T16:30:00Z",
+            "sender": "customer",
+            "text": "Não recebi o pedido. O porteiro disse que não recebeu nada."
+        }
+    ],
+    "expected_result": {
+        "action": "CONTESTAR",
+        "reason": "Cliente fez acordo informal para deixar na portaria. Entregador cumpriu o acordo. Responsabilidade não é do restaurante.",
+        "should_contest": true,
+        "confidence": 0.9,
+        "key_evidence": "Acordo explícito no chat: 'Pode deixar com o porteiro?' + Confirmação do entregador"
+    }
+}

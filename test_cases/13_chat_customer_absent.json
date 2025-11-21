@@ -1,0 +1,58 @@
+{
+    "order_id": "CHAT-CUSTOMER-ABSENT",
+    "reason_code": "ITEM_NOT_RECEIVED",
+    "financial_impact": 95.00,
+    "timestamps": {
+        "created_at": "2025-11-20T16:00:00Z",
+        "confirmed_at": "2025-11-20T16:05:00Z",
+        "eta_max": "2025-11-20T16:50:00Z",
+        "dispatched_at": "2025-11-20T16:30:00Z",
+        "actual_arrival_at": "2025-11-20T16:45:00Z"
+    },
+    "delivery_evidence": {
+        "gps_logs": [
+            {
+                "timestamp": "2025-11-20T16:45:00Z",
+                "latitude": -23.550520,
+                "longitude": -46.633308,
+                "distance_to_address_meters": 2
+            }
+        ],
+        "delivery_pin_validated": false,
+        "pin_validated_at": null
+    },
+    "chat_history": [
+        {
+            "timestamp": "2025-11-20T16:45:00Z",
+            "sender": "driver",
+            "text": "Cheguei no endereço. Onde você está?"
+        },
+        {
+            "timestamp": "2025-11-20T16:48:00Z",
+            "sender": "driver",
+            "text": "Estou na porta, pode descer?"
+        },
+        {
+            "timestamp": "2025-11-20T16:52:00Z",
+            "sender": "driver",
+            "text": "Tentei ligar 3 vezes mas não atende. Vou aguardar mais 5 minutos."
+        },
+        {
+            "timestamp": "2025-11-20T16:58:00Z",
+            "sender": "driver",
+            "text": "Infelizmente não consegui entregar. Cliente não atendeu após 13 minutos de espera."
+        },
+        {
+            "timestamp": "2025-11-20T17:30:00Z",
+            "sender": "customer",
+            "text": "Não recebi meu pedido! Quero reembolso."
+        }
+    ],
+    "expected_result": {
+        "action": "CONTESTAR",
+        "reason": "Cliente estava ausente. Entregador aguardou 13 minutos e fez múltiplas tentativas de contato sem resposta.",
+        "should_contest": true,
+        "confidence": 0.95,
+        "key_evidence": "Chat mostra 4 mensagens do entregador sem resposta do cliente + reclamação tardia (45min depois)"
+    }
+}

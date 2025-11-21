@@ -1,0 +1,52 @@
+{
+    "order_id": "DELIVERY-DELAYED-LOGISTICS",
+    "reason_code": "TAKING_TOO_LONG",
+    "financial_impact": 135.00,
+    "timestamps": {
+        "created_at": "2025-11-20T15:00:00Z",
+        "confirmed_at": "2025-11-20T15:05:00Z",
+        "eta_max": "2025-11-20T15:50:00Z",
+        "dispatched_at": "2025-11-20T15:25:00Z",
+        "cancellation_requested_at": "2025-11-20T16:10:00Z"
+    },
+    "delivery_evidence": {
+        "gps_logs": [
+            {
+                "timestamp": "2025-11-20T15:50:00Z",
+                "latitude": -23.560520,
+                "longitude": -46.643308,
+                "distance_to_address_meters": 5000,
+                "notes": "Entregador ainda longe do endereço no horário previsto"
+            },
+            {
+                "timestamp": "2025-11-20T16:10:00Z",
+                "latitude": -23.555520,
+                "longitude": -46.638308,
+                "distance_to_address_meters": 1000
+            }
+        ],
+        "delivery_pin_validated": false,
+        "pin_validated_at": null,
+        "delivery_method": "ifood_logistics"
+    },
+    "chat_history": [
+        {
+            "timestamp": "2025-11-20T16:00:00Z",
+            "sender": "customer",
+            "text": "O entregador está muito longe ainda. Já passou do horário!"
+        },
+        {
+            "timestamp": "2025-11-20T16:05:00Z",
+            "sender": "driver",
+            "text": "Desculpe, peguei trânsito pesado. Estou chegando."
+        }
+    ],
+    "expected_result": {
+        "action": "CONTESTAR",
+        "reason": "Atraso de 20 minutos causado pela logística do iFood (entregador próprio). Restaurante despachou no prazo (15:25).",
+        "should_contest": true,
+        "financial_responsibility": "platform_logistics",
+        "confidence": 0.9,
+        "key_evidence": "Despacho às 15:25 (dentro do prazo) + GPS mostra entregador longe às 15:50"
+    }
+}

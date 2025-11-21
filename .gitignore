@@ -1,0 +1,33 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.egg-info/
+*.egg
+*.dist/
+*.log
+*.sqlite3
+
+# Virtual env
+venv/
+.env
+.env.*
+
+# Node / JS
+node_modules/
+npm-debug.log
+
+# Dados sensíveis
+client_secret.json
+*.pem
+
+# Banco de Dados e Artefatos
+chroma_db_ifood/
+n8n_data/
+.n8n/
+
+# Imagens / vídeos gerados (artefatos)
+*.png
+*.webp
+*.mp4

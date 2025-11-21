@@ -1,0 +1,36 @@
+{
+    "order_id": "PREP-ON-TIME-001",
+    "reason_code": "CHANGED_MIND",
+    "financial_impact": 52.00,
+    "timestamps": {
+        "created_at": "2025-11-20T19:00:00Z",
+        "confirmed_at": "2025-11-20T19:05:00Z",
+        "eta_max": "2025-11-20T19:40:00Z",
+        "preparation_started_at": "2025-11-20T19:07:00Z",
+        "cancellation_requested_at": "2025-11-20T19:15:00Z"
+    },
+    "delivery_evidence": {
+        "gps_logs": [],
+        "delivery_pin_validated": false,
+        "pin_validated_at": null
+    },
+    "chat_history": [
+        {
+            "timestamp": "2025-11-20T19:15:00Z",
+            "sender": "customer",
+            "text": "Desculpa, preciso cancelar. Surgiu um imprevisto."
+        },
+        {
+            "timestamp": "2025-11-20T19:16:00Z",
+            "sender": "restaurant",
+            "text": "Já comecei a preparar. Posso recusar o cancelamento?"
+        }
+    ],
+    "expected_result": {
+        "action": "RECUSAR_CANCELAMENTO",
+        "reason": "Pedido em preparo dentro do prazo. Restaurante tem autonomia para recusar pois já iniciou a produção.",
+        "should_contest": false,
+        "financial_responsibility": "customer",
+        "notes": "Restaurante pode aceitar ou recusar. Se aceitar, absorve o custo."
+    }
+}

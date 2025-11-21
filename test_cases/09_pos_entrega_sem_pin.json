@@ -1,0 +1,57 @@
+{
+    "order_id": "CUSTOMER-ABSENT-CASE",
+    "reason_code": "ITEM_NOT_RECEIVED",
+    "financial_impact": 89.00,
+    "timestamps": {
+        "created_at": "2025-11-20T18:00:00Z",
+        "confirmed_at": "2025-11-20T18:05:00Z",
+        "eta_max": "2025-11-20T18:45:00Z",
+        "dispatched_at": "2025-11-20T18:30:00Z",
+        "actual_arrival_at": "2025-11-20T18:42:00Z"
+    },
+    "delivery_evidence": {
+        "gps_logs": [
+            {
+                "timestamp": "2025-11-20T18:42:00Z",
+                "latitude": -23.550520,
+                "longitude": -46.633308,
+                "distance_to_address_meters": 3,
+                "wait_duration_minutes": 15
+            }
+        ],
+        "delivery_pin_validated": false,
+        "pin_validated_at": null,
+        "contact_attempts": 4,
+        "photo_proof_url": "https://example.com/waiting_at_door.jpg"
+    },
+    "chat_history": [
+        {
+            "timestamp": "2025-11-20T18:42:00Z",
+            "sender": "driver",
+            "text": "Cheguei no endereço. Onde você está?"
+        },
+        {
+            "timestamp": "2025-11-20T18:45:00Z",
+            "sender": "driver",
+            "text": "Estou aguardando há 3 minutos, pode descer?"
+        },
+        {
+            "timestamp": "2025-11-20T18:50:00Z",
+            "sender": "driver",
+            "text": "Já tentei ligar 3 vezes. Vou aguardar mais 5 minutos."
+        },
+        {
+            "timestamp": "2025-11-20T18:57:00Z",
+            "sender": "driver",
+            "text": "Infelizmente não consegui entregar. Cliente não atendeu após 15 minutos de espera."
+        }
+    ],
+    "expected_result": {
+        "action": "CONTESTAR",
+        "reason": "Cliente ausente. Entregador aguardou 15 minutos no local correto e fez 4 tentativas de contato sem resposta.",
+        "should_contest": true,
+        "financial_responsibility": "customer",
+        "confidence": 0.95,
+        "key_evidence": "GPS no local + 15min de espera + 4 tentativas de contato + chat log"
+    }
+}

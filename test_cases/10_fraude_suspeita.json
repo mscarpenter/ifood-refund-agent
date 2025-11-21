@@ -1,0 +1,52 @@
+{
+    "order_id": "FRAUD-SUSPECT-PATTERN",
+    "reason_code": "QUALITY_ISSUE",
+    "financial_impact": 45.00,
+    "timestamps": {
+        "created_at": "2025-11-20T14:00:00Z",
+        "confirmed_at": "2025-11-20T14:05:00Z",
+        "eta_max": "2025-11-20T14:45:00Z",
+        "dispatched_at": "2025-11-20T14:25:00Z",
+        "actual_arrival_at": "2025-11-20T14:40:00Z"
+    },
+    "delivery_evidence": {
+        "gps_logs": [
+            {
+                "timestamp": "2025-11-20T14:40:00Z",
+                "latitude": -23.550520,
+                "longitude": -46.633308,
+                "distance_to_address_meters": 2
+            }
+        ],
+        "delivery_pin_validated": true,
+        "pin_validated_at": "2025-11-20T14:41:00Z",
+        "photo_proof_url": "https://example.com/delivery_ok.jpg"
+    },
+    "chat_history": [
+        {
+            "timestamp": "2025-11-20T14:40:00Z",
+            "sender": "driver",
+            "text": "Entregue! Bom apetite!"
+        },
+        {
+            "timestamp": "2025-11-20T15:30:00Z",
+            "sender": "customer",
+            "text": "A comida estava fria e horrível. Quero reembolso."
+        }
+    ],
+    "customer_history": {
+        "total_orders": 15,
+        "refund_requests": 8,
+        "refund_rate": 0.53,
+        "notes": "Cliente com histórico suspeito de reclamações frequentes"
+    },
+    "expected_result": {
+        "action": "CONTESTAR",
+        "reason": "Entrega rápida (5 minutos antes do prazo) + PIN validado + Histórico suspeito do cliente (53% de pedidos com reembolso).",
+        "should_contest": true,
+        "financial_responsibility": "customer_fraud",
+        "confidence": 0.85,
+        "key_evidence": "Padrão de fraude + Entrega dentro do prazo + Sem evidência fotográfica do problema",
+        "notes": "Recomendar análise humana devido ao padrão de comportamento"
+    }
+}

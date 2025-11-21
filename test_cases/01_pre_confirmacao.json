@@ -1,0 +1,29 @@
+{
+    "order_id": "PRE-CONF-001",
+    "reason_code": "CHANGED_MIND",
+    "financial_impact": 45.00,
+    "timestamps": {
+        "created_at": "2025-11-20T19:00:00Z",
+        "eta_max": "2025-11-20T19:45:00Z",
+        "confirmed_at": null,
+        "actual_arrival_at": null
+    },
+    "delivery_evidence": {
+        "gps_logs": [],
+        "delivery_pin_validated": false,
+        "pin_validated_at": null
+    },
+    "chat_history": [
+        {
+            "timestamp": "2025-11-20T19:02:00Z",
+            "sender": "customer",
+            "text": "Desculpa, vou cancelar. Mudei de ideia."
+        }
+    ],
+    "expected_result": {
+        "action": "ACEITAR_CANCELAMENTO",
+        "reason": "Cancelamento pré-confirmação. Sem custo para o parceiro.",
+        "should_contest": false,
+        "financial_responsibility": "platform"
+    }
+}

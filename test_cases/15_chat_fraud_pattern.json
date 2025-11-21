@@ -1,0 +1,48 @@
+{
+    "order_id": "CHAT-FRAUD-PATTERN",
+    "reason_code": "QUALITY_ISSUE",
+    "financial_impact": 58.00,
+    "timestamps": {
+        "created_at": "2025-11-20T14:00:00Z",
+        "confirmed_at": "2025-11-20T14:05:00Z",
+        "eta_max": "2025-11-20T14:45:00Z",
+        "dispatched_at": "2025-11-20T14:25:00Z",
+        "actual_arrival_at": "2025-11-20T14:42:00Z"
+    },
+    "delivery_evidence": {
+        "gps_logs": [
+            {
+                "timestamp": "2025-11-20T14:42:00Z",
+                "latitude": -23.550520,
+                "longitude": -46.633308,
+                "distance_to_address_meters": 1
+            }
+        ],
+        "delivery_pin_validated": false,
+        "pin_validated_at": null
+    },
+    "chat_history": [
+        {
+            "timestamp": "2025-11-20T14:42:00Z",
+            "sender": "driver",
+            "text": "Entregue! Bom apetite!"
+        },
+        {
+            "timestamp": "2025-11-20T14:43:00Z",
+            "sender": "customer",
+            "text": "Obrigado!"
+        },
+        {
+            "timestamp": "2025-11-20T15:30:00Z",
+            "sender": "customer",
+            "text": "A comida estava horrível e fria. Quero reembolso total."
+        }
+    ],
+    "expected_result": {
+        "action": "PENDING",
+        "reason": "Padrão suspeito: Cliente agradeceu normalmente na entrega, mas reclamou 47 minutos depois sem mencionar problema antes. Requer análise humana.",
+        "should_contest": "depende",
+        "confidence": 0.6,
+        "key_evidence": "Mudança abrupta de comportamento + Reclamação tardia sem evidência fotográfica"
+    }
+}

@@ -1,0 +1,14 @@
+# DOCUMENTO OFICIAL DE POLÍTICAS DE REEMBOLSO IFOOD - V1.1 (2025)
+
+SEÇÃO 1. REGRAS DE CANCELAMENTO POR TEMPO:
+1.1. CANCELAMENTO ANTES DA CONFIRMAÇÃO: Reembolso 100%. Nenhuma penalidade para o parceiro.
+1.2. CANCELAMENTO DURANTE O PREPARO: Tolerância máxima de 10 (dez) minutos após o ETA de preparo. Penalidade de insumo se o parceiro comprovar o gasto.
+1.3. CANCELAMENTO DURANTE A ENTREGA: Atraso máximo tolerado de 15 (quinze) minutos após o ETA máximo de entrega. Se exceder, o cliente tem direito ao cancelamento integral.
+
+SEÇÃO 2. REGRAS DE COMPROVAÇÃO DE ENTREGA:
+2.1. O Código de Segurança (PIN) de 4 dígitos, validado no app, constitui prova irrefutável de recebimento pelo cliente.
+2.2. Sem a validação do PIN, a telemetria do GPS e o histórico de chat devem ser usados como evidência secundária.
+
+SEÇÃO 3. POLÍTICA DE CONTESTAÇÃO:
+3.1. O parceiro tem um prazo máximo de 7 (sete) dias corridos a partir da data do pedido para iniciar o processo de contestação de débito.
+3.2. Pedidos com validação de PIN bem-sucedida não são elegíveis para contestação pelo cliente.
