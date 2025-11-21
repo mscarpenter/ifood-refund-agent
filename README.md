@@ -280,7 +280,7 @@ Tabela dinâmica atualizada em tempo real
 
 - [ ] **Botões interativos** no Telegram (Aprovar/Rejeitar)
 - [ ] **Webhook para callbacks** do Telegram
-- [ ] **Gráficos visuais** no dashboard
+- [x] **Gráficos visuais** no dashboard
 - [ ] **API REST** para integração externa
 - [ ] **Testes unitários** completos
 - [x] **CI/CD** com GitHub Actions

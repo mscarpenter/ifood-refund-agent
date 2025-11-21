@@ -130,29 +130,84 @@ def create_dashboard():
         }
     })
     
-    # Conditional Formatting - Highlight High Values (> R$ 100) in Top 5
-    rule = {
-        'ranges': [gspread.utils.rowcol_to_a1(18, 2) + ':' + gspread.utils.rowcol_to_a1(22, 2)],
-        'addConditionalFormatRule': {
-            'rule': {
-                'ranges': [{'sheetId': dashboard.id, 'startRowIndex': 17, 'endRowIndex': 22, 'startColumnIndex': 1, 'endColumnIndex': 2}],
-                'booleanRule': {
-                    'condition': {
-                        'type': 'NUMBER_GREATER',
-                        'values': [{'userEnteredValue': '100'}]
-                    },
-                    'format': {
-                        'backgroundColor': {'red': 1, 'green': 0.9, 'blue': 0.9},
-                        'textFormat': {'foregroundColor': {'red': 0.8, 'green': 0, 'blue': 0}, 'bold': True}
+    # --- CRIAÇÃO DE GRÁFICOS VISUAIS ---
+    print("📊 Gerando gráficos visuais...")
+    
+    # Define a especificação do gráfico (Top 5 Valores)
+    chart_spec = {
+        "requests": [
+            {
+                "addChart": {
+                    "chart": {
+                        "spec": {
+                            "title": "🏆 Top 5 Maiores Reembolsos Recuperados",
+                            "basicChart": {
+                                "chartType": "COLUMN",
+                                "legendPosition": "BOTTOM_LEGEND",
+                                "axis": [
+                                    {"position": "BOTTOM_AXIS", "title": "Pedido"},
+                                    {"position": "LEFT_AXIS", "title": "Valor (R$)"}
+                                ],
+                                "domains": [
+                                    {
+                                        "domain": {
+                                            "sourceRange": {
+                                                "sources": [
+                                                    {
+                                                        "sheetId": dashboard.id,
+                                                        "startRowIndex": 17, # Linha 18 (0-indexed)
+                                                        "endRowIndex": 22,   # Linha 23
+                                                        "startColumnIndex": 0, # Coluna A
+                                                        "endColumnIndex": 1    # Coluna B (exclusivo)
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    }
+                                ],
+                                "series": [
+                                    {
+                                        "series": {
+                                            "sourceRange": {
+                                                "sources": [
+                                                    {
+                                                        "sheetId": dashboard.id,
+                                                        "startRowIndex": 17,
+                                                        "endRowIndex": 22,
+                                                        "startColumnIndex": 1, # Coluna B
+                                                        "endColumnIndex": 2    # Coluna C (exclusivo)
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        "targetAxis": "LEFT_AXIS",
+                                        "color": {"red": 0.2, "green": 0.6, "blue": 0.2} # Verde iFood
+                                    }
+                                ]
+                            }
+                        },
+                        "position": {
+                            "overlayPosition": {
+                                "anchorCell": {
+                                    "sheetId": dashboard.id,
+                                    "rowIndex": 4,    # Linha 5
+                                    "columnIndex": 4  # Coluna E
+                                },
+                                "widthPixels": 600,
+                                "heightPixels": 350
+                            }
+                        }
                     }
                 }
-            },
-            'index': 0
-        }
+            }
+        ]
     }
-    # Note: gspread doesn't strictly support batchUpdate for conditional formatting easily in all versions, 
-    # but we can try or just stick to cell formatting. 
-    # Simplified: Just formatting the header of Top 5 is enough for "Visual".
+
+    try:
+        spreadsheet.batch_update(chart_spec)
+        print("✅ Gráfico de colunas adicionado com sucesso!")
+    except Exception as e:
+        print(f"⚠️ Erro ao criar gráfico: {e}")
     
     # Ajusta largura das colunas
     dashboard.update_index(0)  # Força atualização
