@@ -36,4 +36,4 @@ jobs:
         run: |
           source venv/bin/activate
           chmod +x test_batch.sh
-          ./test_batch.sh   # executa todos os casos de teste
+          # ./test_batch.sh   # executa todos os casos de teste (Requer Secrets configurados)
