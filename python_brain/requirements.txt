@@ -25,7 +25,7 @@ frozenlist==1.8.0
 fsspec==2025.10.0
 gitdb==4.0.12
 GitPython==3.1.45
-google-ai-generativelanguage==0.6.4
+google-ai-generativelanguage==0.6.6
 google-api-core==2.28.1
 google-api-python-client==2.187.0
 google-auth==2.41.1
