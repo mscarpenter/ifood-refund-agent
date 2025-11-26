@@ -49,11 +49,14 @@ O dashboard no Google Sheets é atualizado automaticamente a cada execução bem
 - **Aba 'Dados'**: Contém o registro bruto de todas as contestações.
 - **Aba 'Dashboard'**: Contém métricas e gráficos.
 
-Para recriar o dashboard (se deletado):
+Para visualizar o dashboard em tempo real:
+ 
 ```bash
-cd python_brain
-python create_dashboard.py
+# A partir da raiz do projeto
+python dashboard/server.py
 ```
+ 
+Acesse `http://127.0.0.1:5000` no seu navegador.
 
 ## 📱 Telegram
 

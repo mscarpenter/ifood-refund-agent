@@ -1,0 +1,14 @@
+{
+    "order_id": "TEST-SCENARIO-DELIVERY",
+    "reason_code": "DELAYED",
+    "financial_impact": 85.50,
+    "timestamps": {
+        "eta_max": "2025-11-21T18:00:00Z",
+        "actual_arrival_at": "2025-11-21T17:55:00Z"
+    },
+    "delivery_evidence": {
+        "gps_logs": [],
+        "delivery_pin_validated": false
+    },
+    "chat_history": []
+}

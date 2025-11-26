@@ -18,3 +18,5 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - 📊 Dashboard automático no Google Sheets.
 - ✅ Suite de testes com 15 casos cobrindo diversos cenários.
 - 📄 Documentação completa e guias de uso.
+- 🛠️ **Refatoração RAG (v1.1.0)**: Migração para LCEL (`create_retrieval_chain`) para maior transparência e controle.
+- 📈 **Dashboard Web (v1.1.0)**: Novo dashboard em Flask + Chart.js para visualização em tempo real.

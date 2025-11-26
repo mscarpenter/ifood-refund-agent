@@ -12,7 +12,8 @@ from pydantic import BaseModel, Field
 from dotenv import load_dotenv
 from langchain_google_genai import ChatGoogleGenerativeAI, GoogleGenerativeAIEmbeddings
 from langchain_community.vectorstores import Chroma
-from langchain.chains import RetrievalQA
+from langchain.chains import create_retrieval_chain
+from langchain.chains.combine_documents import create_stuff_documents_chain
 from langchain_core.prompts import ChatPromptTemplate
 
 # --- NOVO: FUNÇÃO DE ESCRITA DE ROI ---
@@ -25,17 +26,35 @@ def log_roi_to_sheet(data):
         gc = gspread.service_account(filename=json_creds)
         
         # 2. Abre a planilha pelo ID (mais seguro que nome)
-        spreadsheet = gc.open_by_key("14qM34cpPSK8rPcIfjQhY1kI1ysJBAdkaGa_xGX3TKao")
+        spreadsheet_id = os.getenv("SPREADSHEET_ID")
+        if not spreadsheet_id:
+            print("⚠️ SPREADSHEET_ID não configurado no .env. Pulando registro no Sheets.", file=sys.stderr)
+            return False
+            
+        spreadsheet = gc.open_by_key(spreadsheet_id)
         
-        # 3. Seleciona a primeira aba
-        worksheet = spreadsheet.sheet1
+        # 3. Seleciona a aba correta de DADOS (e não o Dashboard)
+        try:
+            worksheet = spreadsheet.worksheet("Relatório_ROI_iFood")
+        except:
+            # Se não existir, cria a aba
+            worksheet = spreadsheet.add_worksheet(title="Relatório_ROI_iFood", rows=1000, cols=10)
+            worksheet.append_row(["Order ID", "Valor (R$)", "Data", "Defesa Gerada"])
         
         # 4. Dados para anexar (Append Row)
+        # Garante que o valor financeiro seja enviado como STRING com VÍRGULA (Padrão BR)
+        # Isso evita que o Google Sheets engula o ponto decimal (ex: 125.5 -> 1255)
+        try:
+            val_float = float(data.get("financial_impact", 0.0))
+            val_formatted = f"{val_float:.2f}".replace('.', ',')
+        except:
+            val_formatted = "0,00"
+
         row = [
             data.get("order_id"),
-            data.get("financial_impact"),
-            time.strftime("%Y-%m-%d"), # Data formatada
-            data.get("generated_defense")[:500] # Limita a 500 caracteres para não quebrar a célula
+            val_formatted, # Enviando como string "125,50" para o Sheets entender
+            time.strftime("%Y-%m-%d"),
+            data.get("generated_defense")[:500]
         ]
         
         worksheet.append_row(row)
@@ -300,10 +319,7 @@ def send_telegram_approval(contestation_data: dict) -> dict:
         print(traceback.format_exc(), file=sys.stderr)
         return {"sent": False, "error": str(e)}
 
-# Imports para o RAG
-from langchain_community.vectorstores import Chroma
-from langchain_google_genai import GoogleGenerativeAIEmbeddings 
-from langchain.chains import RetrievalQA
+# (Imports do RAG já realizados no topo do arquivo)
 
 # Carregar variáveis de ambiente (.env)
 load_dotenv()
@@ -321,7 +337,7 @@ llm = ChatGoogleGenerativeAI(
 )
 
 # --- CONFIGURAÇÃO DO RAG ---
-VECTOR_DB_DIR = "chroma_db_ifood"
+VECTOR_DB_DIR = os.path.join(os.path.dirname(__file__), "chroma_db_ifood")
 embeddings = GoogleGenerativeAIEmbeddings(model="models/text-embedding-004") 
 
 # Carrega o banco vetorial persistente
@@ -330,11 +346,28 @@ rag_db = Chroma(persist_directory=VECTOR_DB_DIR, embedding_function=embeddings)
 # Cria a Cadeia de Recuperação (Retrieval Chain)
 # O Gemini agora pode consultar a política de reembolso
 retriever = rag_db.as_retriever()
-rag_chain = RetrievalQA.from_chain_type(
-    llm=llm,
-    chain_type="stuff",
-    retriever=retriever
+
+# 1. Prompt do Sistema para o RAG (Define como ele usa o contexto)
+system_prompt = (
+    "Você é um especialista em políticas de reembolso do iFood. "
+    "Use o contexto recuperado abaixo para responder à pergunta sobre regras e procedimentos. "
+    "Se a resposta não estiver no contexto, diga que não encontrou a informação oficial."
+    "\n\n"
+    "Contexto Oficial:\n{context}"
 )
+
+rag_prompt = ChatPromptTemplate.from_messages(
+    [
+        ("system", system_prompt),
+        ("human", "{input}"),
+    ]
+)
+
+# 2. Chain de Documentos (Processa o contexto)
+question_answer_chain = create_stuff_documents_chain(llm, rag_prompt)
+
+# 3. Chain Final (Conecta Retriever -> Documentos -> LLM)
+rag_chain = create_retrieval_chain(retriever, question_answer_chain)
 # --- FIM CONFIGURAÇÃO DO RAG ---
 
 # === 2. ESTRUTURAS DE DADOS (MODELOS Pydantic) ===
@@ -510,7 +543,9 @@ def process_refund_request(json_data: str):
         if action != "PENDING":
             print("🧠 Consultando base de política para obter texto oficial...", file=sys.stderr)
             # Chamada principal do RAG com a query específica
-            rag_response = rag_chain.run(rag_query)
+            # O novo método retorna um dict com 'answer' e 'context'
+            response = rag_chain.invoke({"input": rag_query})
+            rag_response = response["answer"]
             
             print(f"⚡ Regra detectada: {action}. Gerando Comunicação...", file=sys.stderr)
             

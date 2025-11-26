@@ -73,7 +73,7 @@ flowchart LR
 
 - **Documentos indexados**: PDFs, markdowns e textos de políticas de reembolso do iFood.  
 - **Embeddings**: `text-embedding-004` (Gemini).  
-- **Busca**: `RetrievalQA` do LangChain que devolve o trecho mais relevante para a *query* gerada pelo motor de decisão.
+- **Busca**: `create_retrieval_chain` (LCEL) do LangChain que devolve o trecho mais relevante para a *query* gerada pelo motor de decisão.
 
 ---
 
@@ -163,7 +163,7 @@ flowchart LR
 | Vision | **Gemini Vision** |
 | Mensageria | **Telegram Bot API** |
 | Persistência | **Google Sheets API** (`gspread`) |
-| Dashboard | **Google Sheets** (fórmulas) |
+| Dashboard | **Flask** + **Chart.js** (Web) |
 | CI (opcional) | **GitHub Actions** |
 
 ---
@@ -201,10 +201,10 @@ GOOGLE_API_KEY=YOUR_GOOGLE_SHEETS_KEY
 EOF
 
 # 5. Indexar a base de conhecimento (executa apenas uma vez)
-python python_brain/indexer.py
+python python_brain/ingest_policy.py
 
-# 6. Criar o dashboard (ou usar o já criado)
-python python_brain/create_dashboard.py
+# 6. Rodar o Dashboard
+python dashboard/server.py
 
 # 7. Testar um caso
 ./test_case.sh 08
@@ -226,7 +226,7 @@ ifood-refund-agent/
 │   └── VIDEO_SCRIPT.md          # Roteiro do vídeo de demonstração
 ├── python_brain/
 │   ├── reimbursement_brain.py   # Motor principal
-│   ├── indexer.py               # Indexador RAG
+│   ├── ingest_policy.py         # Indexador RAG
 │   ├── create_dashboard.py      # Cria aba Dashboard
 │   ├── get_telegram_chat_id.py  # Helper para obter CHAT_ID
 │   ├── requirements.txt         # Dependências Python

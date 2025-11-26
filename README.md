@@ -110,66 +110,7 @@ graph TB
 | **LLM** | Gemini 2.0 Flash | Geração de texto e análise |
 | **Vector DB** | ChromaDB | Armazena políticas do iFood |
 | **Notificações** | Telegram Bot API | Aprovação humana |
-| **Dashboard** | Google Sheets | Métricas e relatórios |
-
----
-
-## Instalação Rápida
-
-### Pré-requisitos
-
-- Python 3.12+
-- n8n (Docker ou local)
-- Conta Google (para Sheets)
-- API Key do Gemini
-
-### 1. Clone o Repositório
-
-```bash
-git clone https://github.com/seu-usuario/ifood-refund-agent.git
-cd ifood-refund-agent
-```
-
-### 2. Configure o Ambiente Python
-
-```bash
-cd python_brain
-python -m venv venv
-source venv/bin/activate  # Linux/Mac
-# ou
-venv\Scripts\activate  # Windows
-
-pip install -r requirements.txt
-```
-
-### 3. Configure as Variáveis de Ambiente
-
-Crie o arquivo `.env`:
-
-```env
-GEMINI_API_KEY=sua_chave_aqui
-TELEGRAM_BOT_TOKEN=seu_token_aqui
-TELEGRAM_CHAT_ID=seu_chat_id_aqui
-```
-
-### 4. Indexe a Base de Conhecimento
-
-```bash
-python indexer.py
-```
-
-### 5. Configure o Google Sheets
-
-1. Crie uma Service Account no Google Cloud
-2. Baixe o `client_secret.json`
-3. Coloque em `python_brain/`
-4. Compartilhe a planilha com o email da Service Account
-
-### 6. Crie o Dashboard
-
-```bash
-python create_dashboard.py
-```
+| **Dashboard** | Flask + Chart.js | Métricas em tempo real |
 
 ### 7. Configure o n8n
 
@@ -263,7 +204,8 @@ Tabela dinâmica atualizada em tempo real
 ### Automação
 - **n8n**: Orquestração de workflows
 - **Telegram Bot API**: Notificações
-- **Google Sheets API**: Dashboard
+- **Flask + Chart.js**: Dashboard em Tempo Real
+- **Google Sheets API**: Base de Dados
 
 ---
 

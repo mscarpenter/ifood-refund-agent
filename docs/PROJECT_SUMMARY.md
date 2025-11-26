@@ -56,7 +56,7 @@
 - Top 5 maiores valores
 - Fórmulas dinâmicas (atualização automática)
 
-**Script**: `create_dashboard.py`
+**Script**: `create_dashboard.py` e `dashboard/server.py` (Web)
 
 ---
 
@@ -121,7 +121,7 @@ ifood-refund-agent/
 │
 ├── python_brain/
 │   ├── reimbursement_brain.py   # Cérebro principal
-│   ├── indexer.py               # Indexador RAG
+│   ├── ingest_policy.py         # Indexador RAG
 │   ├── create_dashboard.py      # Criador de dashboard
 │   ├── get_telegram_chat_id.py  # Helper Telegram
 │   ├── requirements.txt         # Dependências
@@ -178,7 +178,7 @@ ifood-refund-agent/
 1. **RAG Híbrido**: Combina regras rígidas com IA generativa
 2. **Análise Multimodal**: Texto + Imagem + Contexto
 3. **Human-in-the-Loop**: Aprovação humana sem bloquear automação
-4. **Dashboard Dinâmico**: Fórmulas do Google Sheets (zero código)
+4. **Dashboard Híbrido**: Google Sheets (fórmulas) + Web (Flask/Chart.js)
 
 ### Boas Práticas
 - ✅ Type hints em todo código Python

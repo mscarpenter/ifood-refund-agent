@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iFood Refund Agent | Monitoramento</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #121212;
+            color: #e0e0e0;
+        }
+
+        .card {
+            background-color: #1e1e1e;
+            border: 1px solid #333;
+            border-radius: 8px;
+        }
+
+        .card:hover {
+            border-color: #ea1d2c;
+            transition: 0.3s;
+        }
+
+        .text-ifood {
+            color: #ea1d2c;
+        }
+
+        .bg-ifood {
+            background-color: #ea1d2c;
+        }
+    </style>
+</head>
+
+<body class="p-6">
+
+    <!-- Header -->
+    <div class="flex justify-between items-center mb-8">
+        <div>
+            <h1 class="text-3xl font-bold text-white flex items-center gap-2">
+                <span class="text-4xl">🤖</span> iFood Refund Agent
+            </h1>
+            <p class="text-gray-400 text-sm mt-1">Monitoramento em Tempo Real • Grafana Style</p>
+        </div>
+        <div class="text-right">
+            <div class="text-xs text-gray-500">STATUS DO SISTEMA</div>
+            <div class="text-green-500 font-bold flex items-center justify-end gap-1">
+                <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span> ONLINE
+            </div>
+        </div>
+    </div>
+
+    <!-- KPIs -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <!-- Card 1 -->
+        <div class="card p-6 border-b-4 border-ifood-red">
+            <div class="text-gray-400 text-xs font-bold uppercase tracking-wider mb-2">Total de Contestações</div>
+            <div class="text-4xl font-bold text-white" id="kpi-total">--</div>
+            <div class="text-xs text-gray-500 mt-2">Processados com sucesso</div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="card p-6 border-b-4 border-green-500">
+            <div class="text-gray-400 text-xs font-bold uppercase tracking-wider mb-2">Valor Recuperado</div>
+            <div class="text-4xl font-bold text-green-400" id="kpi-valor">R$ --</div>
+            <div class="text-xs text-gray-500 mt-2">Economia gerada</div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="card p-6 border-b-4 border-blue-500">
+            <div class="text-gray-400 text-xs font-bold uppercase tracking-wider mb-2">Ticket Médio</div>
+            <div class="text-4xl font-bold text-blue-400" id="kpi-ticket">R$ --</div>
+            <div class="text-xs text-gray-500 mt-2">Por contestação</div>
+        </div>
+    </div>
+
+    <!-- Charts Row -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+        <!-- Main Chart (Line) -->
+        <div class="card p-6 lg:col-span-2">
+            <h3 class="text-lg font-bold text-white mb-4">📈 Evolução Diária</h3>
+            <div class="relative h-64 w-full">
+                <canvas id="dailyChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Side Chart (Bar) -->
+        <div class="card p-6">
+            <h3 class="text-lg font-bold text-white mb-4">🏆 Top 5 Maiores</h3>
+            <div class="relative h-64 w-full">
+                <canvas id="top5Chart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Table -->
+    <div class="card p-6">
+        <h3 class="text-lg font-bold text-white mb-4">📋 Últimas Atividades</h3>
+        <div class="overflow-x-auto">
+            <table class="w-full text-left text-sm text-gray-400">
+                <thead class="bg-black/20 text-xs uppercase font-bold text-gray-200">
+                    <tr>
+                        <th class="p-3">Order ID</th>
+                        <th class="p-3">Data</th>
+                        <th class="p-3">Valor</th>
+                        <th class="p-3">Status</th>
+                    </tr>
+                </thead>
+                <tbody id="table-body" class="divide-y divide-gray-800">
+                    <!-- Rows will be injected here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        async function fetchData() {
+            try {
+                const response = await fetch('/api/metrics');
+                const data = await response.json();
+
+                if (data.error) return;
+
+                // Update KPIs
+                document.getElementById('kpi-total').innerText = data.kpis.total;
+                document.getElementById('kpi-valor').innerText = data.kpis.valor_total;
+                document.getElementById('kpi-ticket').innerText = data.kpis.ticket_medio;
+
+                // Update Table
+                const tbody = document.getElementById('table-body');
+                tbody.innerHTML = data.recent.map(row => `
+                    <tr class="hover:bg-white/5 transition">
+                        <td class="p-3 font-mono text-white">${row['Order ID']}</td>
+                        <td class="p-3">${row['Data']}</td>
+                        <td class="p-3 text-green-400 font-bold">${row['Valor_Formatado']}</td>
+                        <td class="p-3">
+                            <span class="px-2 py-1 rounded bg-green-900/30 text-green-400 text-xs font-bold">CONTESTADO</span>
+                        </td>
+                    </tr>
+                `).join('');
+
+                // Charts Config
+                const commonOptions = {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        x: { grid: { color: '#333' }, ticks: { color: '#888' } },
+                        y: { grid: { color: '#333' }, ticks: { color: '#888' } }
+                    }
+                };
+
+                // Render Daily Chart
+                new Chart(document.getElementById('dailyChart'), {
+                    type: 'line',
+                    data: {
+                        labels: data.daily.labels,
+                        datasets: [{
+                            label: 'Valor Recuperado',
+                            data: data.daily.values,
+                            borderColor: '#ea1d2c',
+                            backgroundColor: 'rgba(234, 29, 44, 0.1)',
+                            borderWidth: 3,
+                            fill: true,
+                            tension: 0.4
+                        }]
+                    },
+                    options: commonOptions
+                });
+
+                // Render Top 5 Chart
+                new Chart(document.getElementById('top5Chart'), {
+                    type: 'bar',
+                    data: {
+                        labels: data.top5.labels,
+                        datasets: [{
+                            label: 'Valor',
+                            data: data.top5.values,
+                            backgroundColor: ['#ea1d2c', '#c41623', '#9e101b', '#7a0b14', '#56070d'],
+                            borderRadius: 4
+                        }]
+                    },
+                    options: {
+                        ...commonOptions,
+                        indexAxis: 'y'
+                    }
+                });
+
+            } catch (e) {
+                console.error("Erro ao carregar dados", e);
+            }
+        }
+
+        fetchData();
+        // Auto-refresh a cada 30s
+        setInterval(fetchData, 30000);
+    </script>
+</body>
+
+</html>

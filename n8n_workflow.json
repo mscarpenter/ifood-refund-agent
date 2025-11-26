@@ -1,0 +1,74 @@
+{
+    "name": "iFood Refund Agent Workflow",
+    "nodes": [
+        {
+            "parameters": {
+                "httpMethod": "POST",
+                "path": "ifood-refund",
+                "options": {}
+            },
+            "name": "Webhook",
+            "type": "n8n-nodes-base.webhook",
+            "typeVersion": 1,
+            "position": [
+                460,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "command": "=python3 python_brain/reimbursement_brain.py '{{JSON.stringify($json.body)}}'"
+            },
+            "name": "Execute Python Brain",
+            "type": "n8n-nodes-base.executeCommand",
+            "typeVersion": 1,
+            "position": [
+                680,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "conditions": {
+                    "string": [
+                        {
+                            "value1": "={{JSON.parse($json.stdout).action}}",
+                            "value2": "CONTESTAR"
+                        }
+                    ]
+                }
+            },
+            "name": "Se Contestar",
+            "type": "n8n-nodes-base.if",
+            "typeVersion": 1,
+            "position": [
+                900,
+                300
+            ]
+        }
+    ],
+    "connections": {
+        "Webhook": {
+            "main": [
+                [
+                    {
+                        "node": "Execute Python Brain",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Execute Python Brain": {
+            "main": [
+                [
+                    {
+                        "node": "Se Contestar",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        }
+    }
+}
